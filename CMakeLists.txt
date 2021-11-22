@@ -39,14 +39,13 @@ include_directories(${Arduino15}/packages/cm/hardware/esp32/1.2.4/libraries/SD/s
 include_directories(${Arduino15}/packages/cm/hardware/esp32/1.2.4/libraries/SPI/src)
 include_directories(${Arduino15}/packages/cm/hardware/esp32/1.2.4/libraries/WiFi/src)
 include_directories(${Arduino15}/packages/cm/hardware/esp32/1.2.4/libraries/SPIFFS/src)
-include_directories(${Arduino15}/packages/cm/hardware/esp32/1.2.4/libraries/CircuitOS/src)
 include_directories(${Arduino15}/packages/cm/hardware/esp32/1.2.4/libraries/JPEGDecoder/src)
 include_directories(${Arduino15}/packages/cm/hardware/esp32/1.2.4/libraries/OpenCV-ESP32/src)
 include_directories(${Arduino15}/packages/cm/hardware/esp32/1.2.4/libraries/LovyanGFX/src)
 include_directories(${Arduino15}/packages/cm/hardware/esp32/1.2.4/libraries/Update/src)
 
-include_directories(${ArduinoLibs}/ByteBoi-Library/src)
-include_directories(${ArduinoLibs}/CircuitMess-Audio/src)
+include_directories(${ArduinoLibs}/CircuitOS/src)
+include_directories(${ArduinoLibs}/LoRa/src)
 include_directories(${ArduinoLibs}/cpp-properties/src)
 
 # Source directories
