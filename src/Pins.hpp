@@ -3,9 +3,9 @@
 
 #define BL_PIN 32
 
-#define ss 14
-#define rst -1
-#define dio0 18
+#define LORA_SS 14
+#define LORA_RST -1
+#define LORA_DIO0 18
 
 #define BTN_0 0
 #define BTN_8 1

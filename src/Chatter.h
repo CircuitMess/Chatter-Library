@@ -5,6 +5,7 @@
 #include <CircuitOS.h>
 #include <Display/Display.h>
 #include <Loop/LoopListener.h>
+#include "Pins.hpp"
 
 class ChatterImpl : public LoopListener{
 public:
