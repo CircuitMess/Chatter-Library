@@ -24,4 +24,8 @@
 #define BTN_9 14
 #define BTN_R 15
 
+#define SHIFT_DATA 23
+#define SHIFT_CLOCK 22
+#define SHIFT_PIN 21
+
 #endif //CHATTER_LIBRARY_PINS_H
