@@ -2,6 +2,7 @@
 #include <Loop/LoopManager.h>
 #include "Pins.hpp"
 #include <LoRa.h>
+#include <SPIFFS.h>
 
 ChatterImpl Chatter;
 
@@ -15,6 +16,18 @@ void ChatterImpl::begin(){
 	display->getBaseSprite()->clear(TFT_BLACK);
 	display->commit();
 
+	if(!SPIFFS.begin()){
+		Serial.println();
+	}
+
+	pinMode(SHIFT_DATA, OUTPUT);
+	pinMode(SHIFT_CLOCK, OUTPUT);
+	pinMode(SHIFT_PIN, INPUT);
+
+	inputShift = new InputShift(2,SHIFT_DATA,SHIFT_CLOCK,SHIFT_PIN);
+	inputShift->preregisterButtons({BTN_0, BTN_8, BTN_5, BTN_2, BTN_1, BTN_4, BTN_7, BTN_L, BTN_BACK, BTN_ENTER, BTN_DOWN, BTN_UP, BTN_3, BTN_6, BTN_9, BTN_R});
+	LoopManager::addListener(Input::getInstance());
+	
 	/*SPI.begin(16,17,5,-1);
 	LoRa.setSPI(SPI);
 	LoRa.setPins(ss,rst,dio0);

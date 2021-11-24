@@ -5,6 +5,7 @@
 #include <CircuitOS.h>
 #include <Display/Display.h>
 #include <Loop/LoopListener.h>
+#include <Input/InputShift.h>
 #include "Pins.hpp"
 
 class ChatterImpl : public LoopListener{
@@ -16,6 +17,8 @@ public:
 
 private:
 	Display* display;
+	InputShift* inputShift;
+
 };
 
 extern ChatterImpl Chatter;
