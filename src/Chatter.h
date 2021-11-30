@@ -8,7 +8,7 @@
 #include <Input/InputShift.h>
 #include "Pins.hpp"
 
-class ChatterImpl : public LoopListener{
+class ChatterImpl : public LoopListener, public InputListener{
 public:
 	void begin();
 	void loop(uint micros) override;
