@@ -50,3 +50,7 @@ void ChatterImpl::loop(uint micros){
 Display* ChatterImpl::getDisplay(){
 	return display;
 }
+
+Input* ChatterImpl::getInput(){
+	return inputShift;
+}

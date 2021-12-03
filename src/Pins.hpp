@@ -24,6 +24,12 @@
 #define BTN_9 14
 #define BTN_R 15
 
+#define BTN_LEFT BTN_UP
+#define BTN_RIGHT BTN_DOWN
+#define BTN_A BTN_ENTER
+#define BTN_B BTN_BACK
+#define BTN_C BTN_R
+
 #define SHIFT_DATA 23
 #define SHIFT_CLOCK 22
 #define SHIFT_PIN 21

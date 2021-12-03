@@ -14,6 +14,7 @@ public:
 	void loop(uint micros) override;
 
 	Display* getDisplay();
+	Input* getInput();
 
 private:
 	Display* display;
