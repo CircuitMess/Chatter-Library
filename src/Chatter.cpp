@@ -9,15 +9,15 @@ ChatterImpl Chatter;
 void ChatterImpl::begin(){
 	Serial.begin(115200);
 
-	pinMode(BL_PIN,OUTPUT);
-	digitalWrite(BL_PIN,LOW);
-	display = new Display(128, 160, -1, 0);
+	display = new Display(160, 128, BL_PIN, 3);
 	display->begin();
+	display->swapBytes(false);
+	display->setPower(false);
 	display->getBaseSprite()->clear(TFT_BLACK);
 	display->commit();
 
 	if(!SPIFFS.begin()){
-		Serial.println();
+		Serial.println("SPIFFS failed");
 	}
 
 
