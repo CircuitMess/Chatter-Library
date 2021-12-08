@@ -1,7 +1,6 @@
 #include "Chatter.h"
 #include <Loop/LoopManager.h>
 #include "Pins.hpp"
-#include <LoRa.h>
 #include <SPIFFS.h>
 
 ChatterImpl Chatter;
