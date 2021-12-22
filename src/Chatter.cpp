@@ -15,6 +15,7 @@ void ChatterImpl::begin(){
 
 	display = new Display(160, 128, PIN_BL, 3);
 	display->begin();
+	display->getTft()->setRotation(1);
 	display->swapBytes(false);
 	display->setPower(false);
 	display->getBaseSprite()->clear(TFT_BLACK);
