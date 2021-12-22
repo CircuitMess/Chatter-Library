@@ -1,7 +1,8 @@
 #ifndef CHATTER_LIBRARY_PINS_H
 #define CHATTER_LIBRARY_PINS_H
 
-#define BL_PIN 32
+#define PIN_BL 32
+#define PIN_BUZZ 19
 
 #define LORA_SS 14
 #define LORA_RST -1
@@ -30,8 +31,8 @@
 #define BTN_B BTN_BACK
 #define BTN_C BTN_R
 
-#define SHIFT_DATA 23
-#define SHIFT_CLOCK 22
-#define SHIFT_PIN 21
+#define INPUT_DATA 23
+#define INPUT_CLOCK 22
+#define INPUT_LOAD 21
 
 #endif //CHATTER_LIBRARY_PINS_H

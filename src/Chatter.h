@@ -4,8 +4,10 @@
 #include <Arduino.h>
 #include <CircuitOS.h>
 #include <Display/Display.h>
+#include <Loop/LoopManager.h>
 #include <Loop/LoopListener.h>
 #include <Input/InputShift.h>
+#include <Audio/Piezo.h>
 #include "Pins.hpp"
 
 class ChatterImpl : public LoopListener, public InputListener{
@@ -18,7 +20,7 @@ public:
 
 private:
 	Display* display;
-	InputShift* inputShift;
+	InputShift* input;
 
 };
 
