@@ -8,20 +8,24 @@
 #include <Loop/LoopListener.h>
 #include <Input/InputShift.h>
 #include <Audio/Piezo.h>
+#include <SPI.h>
 #include "Pins.hpp"
 
 class ChatterImpl : public LoopListener, public InputListener{
 public:
+	ChatterImpl();
 	void begin();
 	void loop(uint micros) override;
 
 	Display* getDisplay();
 	Input* getInput();
+	SPIClass& getSPILoRa();
 
 private:
 	Display* display;
 	InputShift* input;
 
+	SPIClass spiLoRa;
 };
 
 extern ChatterImpl Chatter;

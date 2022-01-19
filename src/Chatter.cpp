@@ -5,6 +5,8 @@
 
 ChatterImpl Chatter;
 
+ChatterImpl::ChatterImpl() : spiLoRa(HSPI){}
+
 void ChatterImpl::begin(){
 	Serial.begin(115200);
 
@@ -29,6 +31,8 @@ void ChatterImpl::begin(){
 	input->begin();
 	LoopManager::addListener(input);
 
+	spiLoRa.begin(RADIO_SCK, RADIO_MISO, RADIO_MOSI, RADIO_CS);
+
 	digitalWrite(PIN_BL, LOW);
 }
 
@@ -42,4 +46,8 @@ Display* ChatterImpl::getDisplay(){
 
 Input* ChatterImpl::getInput(){
 	return input;
+}
+
+SPIClass& ChatterImpl::getSPILoRa(){
+	return spiLoRa;
 }

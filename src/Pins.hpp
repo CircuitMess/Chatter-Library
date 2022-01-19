@@ -31,6 +31,14 @@
 #define BTN_B BTN_BACK
 #define BTN_C BTN_R
 
+#define RADIO_SCK 16
+#define RADIO_MISO 17
+#define RADIO_MOSI 5
+#define RADIO_CS 14
+#define RADIO_BUSY 4
+#define RADIO_DIO1 18
+#define RADIO_RST -1
+
 #define INPUT_DATA 23
 #define INPUT_CLOCK 22
 #define INPUT_LOAD 21
