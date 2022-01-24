@@ -18,10 +18,7 @@ void BatteryService::loop(uint micros){
 			voltage = map(measureSum,0,960,0,4500);
 
 			measureCounter = 0;
-			Serial.printf("measureSum : %f\n",measureSum);
 			measureSum = 0;
-			Serial.printf("voltage : %d\n",voltage);
-			Serial.printf("level: %d\n",getLevel());
 		}
 		measureMicros = 0;
 	}
@@ -36,7 +33,6 @@ void BatteryService::begin(){
   for(int i=0;i<10;i++){
 	  ukupno = ukupno + analogRead(BATTERY_PIN);
   }
-  Serial.printf("Baterija : %f",ukupno/10);
 
 }
 
