@@ -15,7 +15,7 @@ void BatteryService::loop(uint micros){
 		Serial.println(measureCounter);
 		if(measureCounter == measureCount){
 			measureSum = measureSum / measureCount;
-			voltage = map(measureSum,0,1055,0,3300);
+			voltage = map(measureSum,0,960,0,4500);
 
 			measureCounter = 0;
 			Serial.printf("measureSum : %f\n",measureSum);
@@ -56,7 +56,7 @@ uint8_t BatteryService::getLevel() const{
 }
 
 uint8_t BatteryService::getPercentage() const{
-	int16_t percentage = map(getVoltage(), 0, 3300, 0, 100);
+	int16_t percentage = map(getVoltage(), 0, 4500, 0, 100);
 	if(percentage < 0){
 		return 0;
 	}else if(percentage > 100){
