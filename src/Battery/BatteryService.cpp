@@ -15,7 +15,7 @@ void BatteryService::loop(uint micros){
 		measureCounter++;
 		if(measureCounter == MeasureCount){
 			measureSum = measureSum / MeasureCount;
-			voltage = map(measureSum,0,960,3700,4300);
+			voltage = map(measureSum,0,960,3700,4500);
 			measureCounter = 0;
 			measureSum = 0;
 		}
@@ -25,7 +25,12 @@ void BatteryService::loop(uint micros){
 void BatteryService::begin(){
   LoopManager::addListener(this);
   pinMode(BATTERY_PIN,INPUT);
-
+  for(int i=0; i<10;i++){
+	  measureSum += analogRead(BATTERY_PIN);
+  }
+	measureSum = measureSum / MeasureCount;
+	voltage = map(measureSum,0,960,3700,4500);
+	measureSum = 0;
 }
 
 uint8_t BatteryService::getLevel() const{
@@ -46,7 +51,7 @@ uint8_t BatteryService::getLevel() const{
 }
 
 uint8_t BatteryService::getPercentage() const{
-	int16_t percentage = map(getVoltage(), 3700,4300, 0, 100);
+	int16_t percentage = map(getVoltage(), 3700,4500, 0, 100);
 	if(percentage < 0){
 		return 0;
 	}else if(percentage > 100){
