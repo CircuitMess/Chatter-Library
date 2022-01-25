@@ -1,22 +1,20 @@
 #include "BatteryService.h"
 #include <Loop/LoopManager.h>
 
-#define BATTERY_PIN 36
+BatteryService Battery;
 
-const uint16_t BatteryService::measureInterval = 10; //in seconds
-const uint16_t BatteryService::measureCount = 10; //in seconds
+const uint16_t BatteryService::MeasureInterval = 10; //in seconds
+const uint16_t BatteryService::MeasureCount = 10; //in seconds
 
 void BatteryService::loop(uint micros){
 	measureMicros += micros;
-	if(measureMicros >= (measureInterval * 1000000) /measureCount){
+	if(measureMicros >= (MeasureInterval * 1000000) / MeasureCount){
 		measureMicros = 0;
 		measureSum += analogRead(BATTERY_PIN);
 		measureCounter++;
-		Serial.println(measureCounter);
-		if(measureCounter == measureCount){
-			measureSum = measureSum / measureCount;
-			voltage = map(measureSum,0,960,0,4500);
-
+		if(measureCounter == MeasureCount){
+			measureSum = measureSum / MeasureCount;
+			voltage = map(measureSum,0,960,3700,4300);
 			measureCounter = 0;
 			measureSum = 0;
 		}

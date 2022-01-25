@@ -16,13 +16,15 @@ public:
 
 private:
 	uint16_t voltage = 0; //in mV
-	static const uint16_t measureInterval;
-	static const uint16_t measureCount;
+	static const uint16_t MeasureInterval;
+	static const uint16_t MeasureCount;
 	uint measureMicros = 0;
 	float measureSum = 0;
 	uint8_t measureCounter = 0;
 
 
 };
+
+extern BatteryService Battery;
 
 #endif //CHATTER_LIBRARY_BATTERYSERVICE_H
