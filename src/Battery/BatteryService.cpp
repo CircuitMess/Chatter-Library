@@ -1,5 +1,6 @@
 #include "BatteryService.h"
 #include <Loop/LoopManager.h>
+#include "../Pins.hpp"
 
 BatteryService Battery;
 
@@ -18,19 +19,12 @@ void BatteryService::loop(uint micros){
 			measureCounter = 0;
 			measureSum = 0;
 		}
-		measureMicros = 0;
 	}
 }
 
 void BatteryService::begin(){
   LoopManager::addListener(this);
   pinMode(BATTERY_PIN,INPUT);
-
-  double ukupno = 0;
-
-  for(int i=0;i<10;i++){
-	  ukupno = ukupno + analogRead(BATTERY_PIN);
-  }
 
 }
 
