@@ -5,7 +5,6 @@
 #include <SPIFFS.h>
 
 ChatterImpl Chatter;
-BatteryService Battery;
 
 ChatterImpl::ChatterImpl() : spiLoRa(HSPI){}
 
