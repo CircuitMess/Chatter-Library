@@ -30,13 +30,15 @@ void BatteryService::begin(){
 
 uint8_t BatteryService::getLevel() const{
 	uint8_t percentage = getPercentage();
-	if(percentage > 80){
+	if(percentage > 90){
+		return 5;
+	}else if(percentage > 75){
 		return 4;
-	}else if(percentage <= 80 && percentage > 40){
+	}else if(percentage > 50){
 		return 3;
-	}else if(percentage <= 40 && percentage > 15){
+	}else if(percentage > 30){
 		return 2;
-	}else if(percentage <= 15 && percentage > 5){
+	}else if(percentage > 15){
 		return 1;
 	}else if(percentage <= 5){
 		return 0;
@@ -44,7 +46,7 @@ uint8_t BatteryService::getLevel() const{
 }
 
 uint8_t BatteryService::getPercentage() const{
-	int16_t percentage = map(getVoltage(), 0, 4500, 0, 100);
+	int16_t percentage = map(getVoltage(), 3700,4300, 0, 100);
 	if(percentage < 0){
 		return 0;
 	}else if(percentage > 100){
