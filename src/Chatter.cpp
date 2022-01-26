@@ -34,9 +34,9 @@ void ChatterImpl::begin(){
 
 	spiLoRa.begin(RADIO_SCK, RADIO_MISO, RADIO_MOSI, RADIO_CS);
 
-	digitalWrite(PIN_BL, LOW);
-
 	Battery.begin();
+
+	digitalWrite(PIN_BL, LOW);
 
 }
 
