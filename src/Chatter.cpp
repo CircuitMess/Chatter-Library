@@ -1,6 +1,7 @@
 #include "Chatter.h"
 #include <Loop/LoopManager.h>
 #include "Pins.hpp"
+#include "Battery/BatteryService.h"
 #include <SPIFFS.h>
 
 ChatterImpl Chatter;
@@ -33,7 +34,10 @@ void ChatterImpl::begin(){
 
 	spiLoRa.begin(RADIO_SCK, RADIO_MISO, RADIO_MOSI, RADIO_CS);
 
+	Battery.begin();
+
 	digitalWrite(PIN_BL, LOW);
+
 }
 
 void ChatterImpl::loop(uint micros){
