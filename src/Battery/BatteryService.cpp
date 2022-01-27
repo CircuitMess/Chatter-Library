@@ -15,7 +15,7 @@ void BatteryService::loop(uint micros){
 		measureCounter++;
 		if(measureCounter == MeasureCount){
 			measureSum = measureSum / MeasureCount;
-			voltage = map(measureSum,0,960,3700,4500);
+			voltage = map(measureSum,720,920,3700,4500);
 			measureCounter = 0;
 			measureSum = 0;
 		}
@@ -29,7 +29,7 @@ void BatteryService::begin(){
 	  measureSum += analogRead(BATTERY_PIN);
   }
 	measureSum = measureSum / MeasureCount;
-	voltage = map(measureSum,0,960,3700,4500);
+	voltage = map(measureSum,720,920,3700,4500);
 	measureSum = 0;
 }
 
