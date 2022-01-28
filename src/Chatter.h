@@ -10,6 +10,7 @@
 #include <Audio/Piezo.h>
 #include <SPI.h>
 #include "Pins.hpp"
+#include "Battery/BatteryService.h"
 
 class ChatterImpl : public LoopListener, public InputListener{
 public:
