@@ -2,6 +2,7 @@
 #include <Loop/LoopManager.h>
 #include "Pins.hpp"
 #include "Battery/BatteryService.h"
+#include "Settings.h"
 #include <SPIFFS.h>
 
 ChatterImpl Chatter;
@@ -27,7 +28,7 @@ void ChatterImpl::begin(){
 	if(!SPIFFS.begin()){
 		Serial.println("SPIFFS failed");
 	}
-
+	Settings.begin();
 	input = new InputShift(INPUT_DATA, INPUT_CLOCK, INPUT_LOAD, 16);
 	input->begin();
 	LoopManager::addListener(input);
