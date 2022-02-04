@@ -12,11 +12,16 @@
 #include "Pins.hpp"
 #include "Battery/BatteryService.h"
 
-class ChatterImpl : public LoopListener, public InputListener{
+class ChatterImpl {
 public:
 	ChatterImpl();
 	void begin();
-	void loop(uint micros) override;
+
+	/**
+	 * Set backlight ON/OFF
+	 * @param state true for on, false for off
+	 */
+	void setBacklight(bool state);
 
 	Display* getDisplay();
 	Input* getInput();

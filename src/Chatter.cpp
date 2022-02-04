@@ -41,8 +41,8 @@ void ChatterImpl::begin(){
 
 }
 
-void ChatterImpl::loop(uint micros){
-
+void ChatterImpl::setBacklight(bool state){
+	digitalWrite(PIN_BL, state ? LOW : HIGH);
 }
 
 Display* ChatterImpl::getDisplay(){
