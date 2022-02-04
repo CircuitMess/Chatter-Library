@@ -9,7 +9,7 @@ struct SettingsData {
 	bool sound = true;
 	uint8_t sleepTime = 1; //index of value in vector, values : {0, 5, 10, 15, 20}[min]
 	uint32_t screenBrightness = 255;
-
+	bool tested = false;
 };
 
 class SettingsImpl {
