@@ -15,7 +15,7 @@
 class ChatterImpl {
 public:
 	ChatterImpl();
-	void begin();
+	void begin(bool backlight = true);
 
 	/**
 	 * Set backlight ON/OFF

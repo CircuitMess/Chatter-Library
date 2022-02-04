@@ -9,7 +9,7 @@ ChatterImpl Chatter;
 
 ChatterImpl::ChatterImpl() : spiLoRa(HSPI){}
 
-void ChatterImpl::begin(){
+void ChatterImpl::begin(bool backlight){
 	Serial.begin(115200);
 
 	pinMode(PIN_BL, OUTPUT);
@@ -46,7 +46,7 @@ void ChatterImpl::begin(){
 
 	Battery.begin();
 
-	digitalWrite(PIN_BL, LOW);
+	setBacklight(backlight);
 
 }
 
