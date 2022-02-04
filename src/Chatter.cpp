@@ -28,9 +28,18 @@ void ChatterImpl::begin(){
 	if(!SPIFFS.begin()){
 		Serial.println("SPIFFS failed");
 	}
+
 	Settings.begin();
+
 	input = new InputShift(INPUT_DATA, INPUT_CLOCK, INPUT_LOAD, 16);
 	input->begin();
+
+	Vector<uint8_t> buttons;
+	for(int i = 0; i < 16; i++){
+		buttons.push_back(i);
+	}
+	input->preregisterButtons(buttons);
+
 	LoopManager::addListener(input);
 
 	spiLoRa.begin(RADIO_SCK, RADIO_MISO, RADIO_MOSI, RADIO_CS);
