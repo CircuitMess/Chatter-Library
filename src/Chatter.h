@@ -18,14 +18,17 @@ public:
 	void begin(bool backlight = true);
 
 	/**
-	 * Set backlight ON/OFF
-	 * @param state true for on, false for off
+	 * Set backlight brightness
+	 * @param brightness brightness value from 0 to 255, internally scaled to 51 - 255
 	 */
-	void setBacklight(bool state);
+	void setBrightness(uint8_t brightness);
 
 	Display* getDisplay();
 	Input* getInput();
 	SPIClass& getSPILoRa();
+
+	void fadeIn();
+	void fadeOut();
 
 private:
 	Display* display;

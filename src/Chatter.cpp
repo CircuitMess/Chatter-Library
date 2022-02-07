@@ -13,15 +13,13 @@ void ChatterImpl::begin(bool backlight){
 	Serial.begin(115200);
 
 	pinMode(PIN_BL, OUTPUT);
-	pinMode(PIN_BL, HIGH);
-
+	digitalWrite(PIN_BL, 1);
 	Piezo.begin(PIN_BUZZ);
 
-	display = new Display(160, 128, PIN_BL, 3);
+	display = new Display(160, 128, -1, 3);
 	display->begin();
 	display->getTft()->setRotation(1);
 	display->swapBytes(false);
-	display->setPower(false);
 	display->getBaseSprite()->clear(TFT_BLACK);
 	display->commit();
 
@@ -46,12 +44,15 @@ void ChatterImpl::begin(bool backlight){
 
 	Battery.begin();
 
-	setBacklight(backlight);
-
+	ledcSetup(1, 5000, 8);
+	ledcAttachPin(PIN_BL, 1);
+	if(backlight){
+		fadeIn();
+	}
 }
 
-void ChatterImpl::setBacklight(bool state){
-	digitalWrite(PIN_BL, state ? LOW : HIGH);
+void ChatterImpl::setBrightness(uint8_t brightness){
+	ledcWrite(1, map(brightness, 0, 255, 180, 0));
 }
 
 Display* ChatterImpl::getDisplay(){
@@ -62,6 +63,20 @@ Input* ChatterImpl::getInput(){
 	return input;
 }
 
-SPIClass& ChatterImpl::getSPILoRa(){
+SPIClass &ChatterImpl::getSPILoRa(){
 	return spiLoRa;
+}
+
+void ChatterImpl::fadeOut(){
+	for(int i = 0; i <= 255; ++i){
+		ledcWrite(1, map(Settings.get().screenBrightness, 0, 255, 180, 0) * (1 - i / 255.0) + i);
+		delay(1);
+	}
+}
+
+void ChatterImpl::fadeIn(){
+	for(int i = 0; i <= 255; ++i){
+		ledcWrite(1, int(255.0 - i * (1 - map(Settings.get().screenBrightness, 0, 255, 180, 0) / 255.0)));
+		delay(1);
+	}
 }
