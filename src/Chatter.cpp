@@ -14,6 +14,7 @@ void ChatterImpl::begin(bool backlight){
 
 	pinMode(PIN_BL, OUTPUT);
 	digitalWrite(PIN_BL, 1);
+
 	Piezo.begin(PIN_BUZZ);
 
 	display = new Display(160, 128, -1, 3);
@@ -44,14 +45,18 @@ void ChatterImpl::begin(bool backlight){
 
 	Battery.begin();
 
-	ledcSetup(1, 5000, 8);
-	ledcAttachPin(PIN_BL, 1);
 	if(backlight){
 		fadeIn();
 	}
 }
 
 void ChatterImpl::setBrightness(uint8_t brightness){
+	if(!pwmInited){
+		ledcSetup(1, 5000, 8);
+		ledcAttachPin(PIN_BL, 1);
+		pwmInited = true;
+	}
+
 	ledcWrite(1, map(brightness, 0, 255, 180, 0));
 }
 
@@ -68,15 +73,51 @@ SPIClass &ChatterImpl::getSPILoRa(){
 }
 
 void ChatterImpl::fadeOut(){
-	for(int i = 0; i <= 255; ++i){
-		ledcWrite(1, map(Settings.get().screenBrightness, 0, 255, 180, 0) * (1 - i / 255.0) + i);
-		delay(1);
+	if(!pwmInited){
+		initPWM();
 	}
+
+	uint8_t dutyOn = map(Settings.get().screenBrightness, 0, 255, 180, 0);
+
+	for(int i = 0; i <= 255; i++){
+		uint8_t val = map(i, 0, 255, dutyOn, 255);
+		ledcWrite(1, val);
+		delay(2);
+	}
+
+	deinitPWM();
 }
 
 void ChatterImpl::fadeIn(){
-	for(int i = 0; i <= 255; ++i){
-		ledcWrite(1, int(255.0 - i * (1 - map(Settings.get().screenBrightness, 0, 255, 180, 0) / 255.0)));
-		delay(1);
+	if(!pwmInited){
+		initPWM();
 	}
+
+	uint8_t dutyOn = map(Settings.get().screenBrightness, 0, 255, 180, 0);
+
+	for(int i = 0; i <= 255; i++){
+		uint8_t val = map(i, 0, 255, 255, dutyOn);
+		ledcWrite(1, val);
+		delay(2);
+	}
+}
+
+void ChatterImpl::initPWM(){
+	ledcSetup(1, 5000, 8);
+	ledcAttachPin(PIN_BL, 1);
+	pwmInited = true;
+}
+
+void ChatterImpl::deinitPWM(){
+	ledcDetachPin(PIN_BL);
+	digitalWrite(PIN_BL, HIGH);
+	pwmInited = false;
+}
+
+bool ChatterImpl::backlightPowered() const{
+	return pwmInited;
+}
+
+void ChatterImpl::backlightOff(){
+	deinitPWM();
 }
