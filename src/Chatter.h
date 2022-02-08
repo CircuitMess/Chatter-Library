@@ -63,6 +63,12 @@ private:
 	void initPWM();
 	void deinitPWM();
 
+	/**
+	 * Return backlight duty cycle for desired brightness.
+	 * @param brightness 0-255
+	 * @return duty cycle 0-255
+	 */
+	static uint8_t mapDuty(uint8_t brightness);
 };
 
 extern ChatterImpl Chatter;

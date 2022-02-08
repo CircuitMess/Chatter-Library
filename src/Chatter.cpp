@@ -57,7 +57,7 @@ void ChatterImpl::setBrightness(uint8_t brightness){
 		pwmInited = true;
 	}
 
-	ledcWrite(1, map(brightness, 0, 255, 180, 0));
+	ledcWrite(1, mapDuty(brightness));
 }
 
 Display* ChatterImpl::getDisplay(){
@@ -77,7 +77,7 @@ void ChatterImpl::fadeOut(){
 		initPWM();
 	}
 
-	uint8_t dutyOn = map(Settings.get().screenBrightness, 0, 255, 180, 0);
+	uint8_t dutyOn = mapDuty(Settings.get().screenBrightness);
 
 	for(int i = 0; i <= 255; i++){
 		uint8_t val = map(i, 0, 255, dutyOn, 255);
@@ -93,7 +93,7 @@ void ChatterImpl::fadeIn(){
 		initPWM();
 	}
 
-	uint8_t dutyOn = map(Settings.get().screenBrightness, 0, 255, 180, 0);
+	uint8_t dutyOn = mapDuty(Settings.get().screenBrightness);
 
 	for(int i = 0; i <= 255; i++){
 		uint8_t val = map(i, 0, 255, 255, dutyOn);
@@ -120,4 +120,8 @@ bool ChatterImpl::backlightPowered() const{
 
 void ChatterImpl::backlightOff(){
 	deinitPWM();
+}
+
+uint8_t ChatterImpl::mapDuty(uint8_t brightness){
+	return map(brightness, 0, 255, 240, 0);
 }
