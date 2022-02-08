@@ -3,11 +3,19 @@
 
 #include <Arduino.h>
 
-const uint8_t ShutdownMinutes[] = {0, 5, 10, 15, 20};
+#define SLEEP_STEPS 5
+#define SHUTDOWN_STEPS 5
+
+extern const uint32_t SleepSeconds[SLEEP_STEPS];
+extern const char* SleepText[SLEEP_STEPS];
+
+extern const uint32_t ShutdownSeconds[SHUTDOWN_STEPS];
+extern const char* ShutdownText[SHUTDOWN_STEPS];
 
 struct SettingsData {
 	bool sound = true;
-	uint8_t sleepTime = 1; //index of value in vector, values : {0, 5, 10, 15, 20}[min]
+	uint8_t sleepTime = 1;
+	uint8_t shutdownTime = 2;
 	uint8_t screenBrightness = 255;
 	bool tested = false;
 };
