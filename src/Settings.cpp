@@ -22,5 +22,10 @@ void SettingsImpl::store(){
 }
 
 void SettingsImpl::reset(){
-	memset(&data, 0, sizeof(SettingsData));
+	data.sound = true;
+	data.sleepTime = 1;
+	data.shutdownTime = 2;
+	data.screenBrightness = 255;
+	data.tested = false;
+	Settings::store();
 }
