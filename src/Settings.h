@@ -18,6 +18,8 @@ struct SettingsData {
 	uint8_t shutdownTime = 2;
 	uint8_t screenBrightness = 255;
 	bool tested = false;
+	uint32_t messagesSent = 0;
+	uint32_t messagesReceived = 0;
 };
 
 class SettingsImpl {
