@@ -52,12 +52,10 @@ void ChatterImpl::begin(bool backlight){
 
 void ChatterImpl::setBrightness(uint8_t brightness){
 	if(!pwmInited){
-		ledcSetup(1, 5000, 8);
-		ledcAttachPin(PIN_BL, 1);
-		pwmInited = true;
+		initPWM();
 	}
 
-	ledcWrite(1, mapDuty(brightness));
+	ledcWrite(6, mapDuty(brightness));
 }
 
 Display* ChatterImpl::getDisplay(){
@@ -81,7 +79,7 @@ void ChatterImpl::fadeOut(){
 
 	for(int i = 0; i <= 255; i++){
 		uint8_t val = map(i, 0, 255, dutyOn, 255);
-		ledcWrite(1, val);
+		ledcWrite(6, val);
 		delay(2);
 	}
 
@@ -97,14 +95,14 @@ void ChatterImpl::fadeIn(){
 
 	for(int i = 0; i <= 255; i++){
 		uint8_t val = map(i, 0, 255, 255, dutyOn);
-		ledcWrite(1, val);
+		ledcWrite(6, val);
 		delay(2);
 	}
 }
 
 void ChatterImpl::initPWM(){
-	ledcSetup(1, 5000, 8);
-	ledcAttachPin(PIN_BL, 1);
+	ledcSetup(6, 5000, 8);
+	ledcAttachPin(PIN_BL, 6);
 	pwmInited = true;
 }
 
