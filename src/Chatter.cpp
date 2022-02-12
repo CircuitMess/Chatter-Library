@@ -16,6 +16,7 @@ void ChatterImpl::begin(bool backlight){
 	digitalWrite(PIN_BL, 1);
 
 	Piezo.begin(PIN_BUZZ);
+	Piezo.noTone();
 
 	display = new Display(160, 128, -1, 3);
 	display->begin();
