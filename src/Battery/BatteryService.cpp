@@ -115,4 +115,5 @@ void BatteryService::calibrate(){
 	calibOffset = CalibRef - volt;
 
 	digitalWrite(CALIB_EN, 0);
+	delay(100);
 }
