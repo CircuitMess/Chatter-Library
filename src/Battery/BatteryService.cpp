@@ -9,13 +9,7 @@ BatteryService Battery;
 
 uint16_t BatteryService::mapReading(uint16_t reading){
 	if(HWRevision::get() == 1){
-		// At 3600 reading 3600, at 4600 reading 4850
-		/*const int volt1 = reading * 4;
-		const int volt2 = std::round(((float) (volt1 - 3600) / 1250.0f) * 250.0f);
-		return volt1 - volt2;*/
-
-		const int volt1 = reading * 4;
-		return map(volt1, 3780, 5030, 3600, 4600);
+		return reading;
 	}else{
 		return map(reading, 720, 920, 3700, 4500);
 	}
@@ -25,7 +19,13 @@ void BatteryService::loop(uint micros){
 	measureMicros += micros;
 	if(measureMicros >= (MeasureInterval * 1000000) / MeasureCount){
 		measureMicros = 0;
-		measureSum += analogRead(BATTERY_PIN);
+
+		if(HWRevision::get() == 1){
+			measureSum += esp_adc_cal_raw_to_voltage(analogRead(BATTERY_PIN), &calChars) * Factor;
+		}else{
+			measureSum += analogRead(BATTERY_PIN);
+		}
+
 		measureCounter++;
 		if(measureCounter == MeasureCount){
 			measureSum = measureSum / MeasureCount;
@@ -44,12 +44,24 @@ void BatteryService::begin(){
 		// TODO: Check if this stays low during deep sleep
 		pinMode(CALIB_EN, OUTPUT);
 		digitalWrite(CALIB_EN, 0);
+		pinMode(CALIB_READ, INPUT);
+
+		analogSetAttenuation(ADC_2_5db);
+
+		//Newer ESP32's used in HWRevision 1 (Wireless-tag WT32-S1) have calibration in efuse
+		esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_2_5, ADC_WIDTH_BIT_12, 0, &calChars);
 
 		calibrate();
+
+		printf("calibration offset: %d\n", calibOffset);
 	}
 
 	for(int i = 0; i < 10; i++){
-		measureSum += analogRead(BATTERY_PIN);
+		if(HWRevision::get() == 1){
+			measureSum += esp_adc_cal_raw_to_voltage(analogRead(BATTERY_PIN), &calChars) * Factor;
+		}else{
+			measureSum += analogRead(BATTERY_PIN);
+		}
 	}
 	measureSum = measureSum / MeasureCount;
 	voltage = measureSum;
@@ -86,7 +98,7 @@ uint8_t BatteryService::getPercentage() const{
 
 uint16_t BatteryService::getVoltage() const{
 	if(HWRevision::get() == 1){
-		return mapReading(voltage + getVoltOffset());
+		return voltage + getVoltOffset();
 	}else{
 		return mapReading(voltage) + getVoltOffset();
 	}
@@ -108,11 +120,13 @@ void BatteryService::calibrate(){
 
 	float sum = 0;
 	for(int i = 0; i < MeasureCount; i++){
-		sum += analogRead(CALIB_READ);
+		sum += esp_adc_cal_raw_to_voltage(analogRead(CALIB_READ), &calChars) * Factor;
 	}
 	const uint16_t volt = std::round(sum / (float) MeasureCount);
 
 	calibOffset = CalibRef - volt;
+
+	printf("calib read: %d, expected %d\n", volt, CalibRef);
 
 	digitalWrite(CALIB_EN, 0);
 	delay(100);
